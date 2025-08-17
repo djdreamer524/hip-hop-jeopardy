@@ -8,61 +8,20 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <audio id="background" autoplay loop volume="0.1">
-    <source src="background.mp3" type="audio/mpeg" />
-  </audio>
-
-  <div class="game-header">
-    <select id="setSelector">
-      <option value="questions.js">Base Game</option>
-      <option value="questions_alt.js">Alternate Game</option>
-    </select>
-  </div>
-
-  <div id="board"></div>
-
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span id="closeBtn" class="close">&times;</span>
-      <h2 id="questionTitle"></h2>
-      <p id="questionText"></p>
-      <p id="answerText" class="hidden"></p>
-      <button id="showAnswerBtn">Show Answer</button>
-      <div class="teams">
-        <button onclick="addPoints(1)">Team 1 +</button>
-        <button onclick="addPoints(2)">Team 2 +</button>
-      </div>
+  <div class="background">
+    <audio autoplay loop volume="0.2">
+      <source src="assets/background.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+    <h1 class="game-title">Hip-Hop Jeopardy</h1>
+    <div class="scoreboard">
+      <div class="team" id="team1">Team 1: <span class="score">0</span></div>
+      <div class="team" id="team2">Team 2: <span class="score">0</span></div>
     </div>
+    <div class="jeopardy-board" id="board"></div>
   </div>
-
-  <div class="scoreboard">
-    <div id="team1">Team 1: <span class="score">0</span></div>
-    <div id="team2">Team 2: <span class="score">0</span></div>
-  </div>
-
-  <audio id="scratch" src="scratch.mp3"></audio>
-  <audio id="applause" src="applause.mp3"></audio>
-
-  <script src="questions.js" id="questions-script"></script>
-  <script src="script_with_labels.js"></script>
-  
-<footer style="position: fixed; bottom: 10px; width: 100%; text-align: center; color: white; font-weight: bold;">
-  Designed by: DJ Dreamer 524
-</footer>
-
-  <script>
-    document.getElementById("setSelector").addEventListener("change", function () {
-      const selectedSet = this.value;
-      const oldScript = document.getElementById("questions-script");
-      const newScript = document.createElement("script");
-      newScript.src = selectedSet;
-      newScript.id = "questions-script";
-      oldScript.remove();
-      document.body.appendChild(newScript);
-      setTimeout(() => {
-        buildBoard();
-      }, 300);
-    });
-  </script>
+  <footer>Designed by: DJ Dreamer 524</footer>
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
