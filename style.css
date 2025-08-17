@@ -1,78 +1,97 @@
 
+/* Base background */
 body {
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  font-family: 'Helvetica Neue', sans-serif;
-  color: white;
-  background-color: #000;
-  background-image: url("assets/graffiti.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-image: url('graffiti_dimmed.jpg');
+  background-repeat: repeat;
+  background-size: auto;
+  background-position: top left;
+  background-attachment: fixed;
+  background-color: #000; /* Fallback */
+  color: #fff;
 }
 
-.game-title {
+/* Game title */
+h1 {
   text-align: center;
-  font-size: 3rem;
   margin-top: 20px;
-  text-shadow: 2px 2px #000;
+  font-size: 3em;
+  color: #fff;
 }
 
-.jeopardy-board {
+/* Footer */
+footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1em;
+  color: #ccc;
+  padding-bottom: 20px;
+}
+
+/* Board layout */
+#board {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-gap: 5px;
+  gap: 4px;
   max-width: 1200px;
   margin: 20px auto;
 }
 
-.cell {
-  background-color: #062d83;
-  border: 2px solid #000;
-  text-align: center;
-  font-size: 1.8rem;
+/* Category headers */
+.category {
+  background-color: black;
+  color: white;
   font-weight: bold;
-  padding: 30px 10px;
+  padding: 15px;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+/* Dollar amount cells */
+.cell {
+  background-color: #00008B; /* Dark Blue */
+  color: white;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
   cursor: pointer;
-  color: #ffcc00;
-  transition: transform 0.2s;
+  transition: background-color 0.3s ease;
 }
 
 .cell:hover {
-  transform: scale(1.05);
+  background-color: #1E90FF; /* Lighter Blue on hover */
 }
 
-.category {
-  background-color: #000;
-  color: #fff;
-  font-size: 1.3rem;
-  padding: 20px 5px;
-  text-align: center;
-  font-weight: bold;
-  border: 2px solid #000;
-}
-
-footer {
-  text-align: center;
-  padding: 20px;
+/* Question popup */
+#questionModal {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.85);
   color: white;
-  font-size: 1rem;
-  background: rgba(0, 0, 0, 0.7);
-  position: relative;
-  bottom: 0;
 }
 
-.scoreboard {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-  gap: 50px;
+#questionModal .modal-content {
+  background-color: #111;
+  margin: 15% auto;
+  padding: 20px;
+  border: 2px solid #444;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
 }
 
-.team {
-  background: rgba(0, 0, 0, 0.6);
+#questionModal button {
+  margin-top: 20px;
   padding: 10px 20px;
-  border: 2px solid #ffcc00;
-  border-radius: 10px;
-  font-size: 1.2rem;
+  font-size: 1em;
+  cursor: pointer;
 }
