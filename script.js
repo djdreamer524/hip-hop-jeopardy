@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const board = document.querySelector("#board");
+  const board = document.querySelector("board");
   if (!board) {
     console.error("Missing .jeopardy-board element in HTML.");
     return;
