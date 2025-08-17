@@ -1,41 +1,43 @@
-
 const categories = ["Hip-Hop Person", "Hip-Hop Location", "Hip-Hop Writing", "Hip-Hop Lyrics", "Hip-Hop Beefs", "Hip-Hop Cars"];
-const questions = [
-  ["Who is Nas?", "Where is Compton?", "What is a rhyme scheme?", "Finish the lyric: 'It was all a...'", "Who did Jay-Z feud with in 2001?", "What car did Tupac get shot in?"],
-  ["Who is Missy Elliott?", "Where is Bed-Stuy?", "What is a double entendre?", "Finish the lyric: 'Straight outta...'", "Who did Drake battle in 2024?", "What car is featured in 'Still D.R.E.'?"],
-  ["Who is KRS-One?", "Where is Queensbridge?", "Define punchline in rap.", "Lyric: 'Cash rules everything...'", "Who beefed with LL Cool J?", "What whip does Rick Ross rap about often?"],
-  ["Who is MC Lyte?", "Where is The Bronx?", "Define metaphor in rap.", "Lyric: 'Jesus walks with...'", "Beef: Common vs.?", "Jay-Z mentions what car in 'Otis'?"],
-  ["Who is Ice Cube?", "Where is Atlanta known for?", "What’s a 16-bar verse?", "Lyric: 'Now I’m in the limelight...'", "Who had beef with The Game?", "What’s a classic NYC street car?"],
-];
-
 const board = document.getElementById("board");
-const modal = document.getElementById("questionModal");
+
+const questions = {
+  "Hip-Hop Person": ["Who is Tupac Shakur?", "Who is Notorious B.I.G.?", "Who is Nas?", "Who is Jay-Z?", "Who is Rakim?"],
+  "Hip-Hop Location": ["What city is the birthplace of hip-hop?", "Where is Compton?", "Where is Atlanta known for in hip-hop?", "What is Queensbridge?", "Where is the Bronx?"],
+  "Hip-Hop Writing": ["What is a bar?", "What is a punchline?", "What is a metaphor?", "What is a simile?", "What is a double entendre?"],
+  "Hip-Hop Lyrics": ["Finish the line: 'It was all a...'", "Who said: 'I'm not a businessman, I'm a business, man'?", "Finish the line: 'I got 99 problems...'", "Who said: 'Dear Mama...'?", "Who rapped: 'Illmatic' album?"],
+  "Hip-Hop Beefs": ["Tupac had beef with?", "Nas vs. who?", "Jay-Z and who had a famous beef?", "50 Cent vs. who?", "Drake and who had a 2015 beef?"],
+  "Hip-Hop Cars": ["What car is in 'Still D.R.E.'?", "What does a lowrider do?", "What car did Biggie rap about?", "What's a Maybach?", "Which rapper is associated with a Rolls Royce?"]
+};
 
 function createBoard() {
-  categories.forEach(cat => {
-    const cell = document.createElement("div");
-    cell.className = "category";
-    cell.innerText = cat;
-    board.appendChild(cell);
+  categories.forEach((cat, catIndex) => {
+    const header = document.createElement("div");
+    header.className = "cell";
+    header.textContent = cat;
+    board.appendChild(header);
   });
 
-  for (let i = 0; i < questions.length; i++) {
-    for (let j = 0; j < categories.length; j++) {
+  for (let row = 0; row < 5; row++) {
+    categories.forEach((cat, catIndex) => {
       const cell = document.createElement("div");
       cell.className = "cell";
-      cell.innerText = "$" + ((i + 1) * 100);
-      cell.onclick = () => showQuestion(questions[i][j], cell);
+      cell.textContent = `$${(row + 1) * 100}`;
+      cell.addEventListener("click", () => showQuestion(cat, row));
       board.appendChild(cell);
-    }
+    });
   }
 }
 
-function showQuestion(text, cell) {
-  modal.innerText = text;
-  modal.style.display = "flex";
-  cell.onclick = null;
-  cell.style.opacity = 0.5;
-  modal.onclick = () => modal.style.display = "none";
+function showQuestion(category, index) {
+  const modal = document.getElementById("question-modal");
+  const text = document.getElementById("question-text");
+  text.textContent = questions[category][index];
+  modal.style.display = "block";
 }
 
-window.onload = createBoard;
+function closeQuestion() {
+  document.getElementById("question-modal").style.display = "none";
+}
+
+createBoard();

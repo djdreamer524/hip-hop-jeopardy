@@ -1,70 +1,58 @@
-
 body {
+  font-family: 'Arial', sans-serif;
   margin: 0;
-  font-family: 'Arial Black', sans-serif;
-  background: url("graffiti.jpg") repeat;
-  background-size: 300px auto;
-  background-attachment: fixed;
-  filter: brightness(25%);
+  padding: 0;
+  background: url('graffiti_dimmed.jpg') repeat;
+  background-size: auto;
+  color: white;
+  text-align: center;
 }
-
-#game {
-  position: relative;
-  background: rgba(0, 0, 0, 0.75);
-  padding: 20px;
+h1 {
+  background-color: black;
+  margin: 0;
+  padding: 1em;
 }
-
+#scoreboard {
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+  background-color: #222;
+  padding: 1em;
+}
 #board {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 4px;
-  max-width: 1000px;
-  margin: 0 auto;
+  gap: 5px;
+  margin: 20px;
 }
-
-.category {
-  background-color: #003399;
-  color: white;
-  text-align: center;
-  font-size: 1.2em;
-  padding: 10px;
-  font-weight: bold;
-}
-
 .cell {
-  background-color: #0000cc;
+  background-color: black;
   color: yellow;
-  text-align: center;
-  font-size: 1.5em;
   padding: 20px;
+  font-weight: bold;
   cursor: pointer;
-  border: 2px solid #fff;
 }
-
-.cell:hover {
-  background-color: #000099;
-}
-
-#questionModal {
+.modal {
+  display: none;
   position: fixed;
-  top: 0;
+  z-index: 1;
   left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 2em;
-  z-index: 1000;
-  text-align: center;
-  padding: 20px;
+  background-color: rgba(0,0,0,0.7);
 }
-
-#footer {
-  text-align: center;
-  padding: 10px;
+.modal-content {
+  background-color: #111;
+  margin: 15% auto;
+  padding: 20px;
+  width: 60%;
   color: white;
-  font-size: 0.9em;
+}
+footer {
+  background-color: #000;
+  padding: 1em;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
 }

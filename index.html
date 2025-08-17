@@ -1,23 +1,33 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hip-Hop Jeopardy</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="game">
-    <div id="board"></div>
-    <div id="questionModal"></div>
+  <h1>Hip-Hop Jeopardy</h1>
+  <div id="scoreboard">
+    <span>Team 1: <span id="team1-score">0</span></span>
+    <span>Team 2: <span id="team2-score">0</span></span>
+  </div>
+  <div id="board"></div>
+
+  <div id="question-modal" class="modal">
+    <div class="modal-content">
+      <span id="question-text"></span>
+      <button onclick="closeQuestion()">Close</button>
+    </div>
   </div>
 
-  <audio id="bgm" autoplay loop>
+  <footer>
+    Designed by: DJ Dreamer 524
+  </footer>
+
+  <audio autoplay loop>
     <source src="instrumental.mp3" type="audio/mpeg">
   </audio>
-
-  <div id="footer">Designed by: DJ Dreamer 524</div>
 
   <script src="script.js"></script>
 </body>
