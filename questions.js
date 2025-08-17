@@ -1,38 +1,54 @@
 
-const questionSet = [
-  { category: "Hip-Hop Person", value: 100, question: "Who is considered the 'God MC' of hip-hop?", answer: "Rakim" },
-  { category: "Hip-Hop Person", value: 200, question: "Which rapper also goes by the name 'Hov'?", answer: "Jay-Z" },
-  { category: "Hip-Hop Person", value: 300, question: "This rapper's real name is Nasir Jones.", answer: "Nas" },
-  { category: "Hip-Hop Person", value: 400, question: "Who was the first solo rapper to win a Pulitzer Prize?", answer: "Kendrick Lamar" },
-  { category: "Hip-Hop Person", value: 500, question: "Who founded Aftermath Entertainment?", answer: "Dr. Dre" },
+const categories = [
+  "Hip-Hop Person",
+  "Hip-Hop Location",
+  "Hip-Hop Writing",
+  "Hip-Hop Lyrics",
+  "Hip-Hop Beefs",
+  "Hip-Hop Cars"
+];
 
-  { category: "Hip-Hop Location", value: 100, question: "What NYC borough is known as the birthplace of hip-hop?", answer: "The Bronx" },
-  { category: "Hip-Hop Location", value: 200, question: "Which city is home to the group OutKast?", answer: "Atlanta" },
-  { category: "Hip-Hop Location", value: 300, question: "What street was Biggie famously from?", answer: "Bed-Stuy’s St. James Place" },
-  { category: "Hip-Hop Location", value: 400, question: "What city did N.W.A. originate from?", answer: "Compton" },
-  { category: "Hip-Hop Location", value: 500, question: "Which borough was Wu-Tang Clan formed in?", answer: "Staten Island" },
-
-  { category: "Hip-Hop Writing", value: 100, question: "This type of rhyme uses multiple syllables and internal structure.", answer: "Multisyllabic rhyme" },
-  { category: "Hip-Hop Writing", value: 200, question: "What’s the term for off-the-top unrehearsed lyrics?", answer: "Freestyle" },
-  { category: "Hip-Hop Writing", value: 300, question: "What’s the name of Nas’s debut album?", answer: "Illmatic" },
-  { category: "Hip-Hop Writing", value: 400, question: "Which rapper is known for storytelling in songs like 'Children’s Story'?", answer: "Slick Rick" },
-  { category: "Hip-Hop Writing", value: 500, question: "What’s the literary term for comparing two things using 'like' or 'as'?", answer: "Simile" },
-
-  { category: "Hip-Hop Lyrics", value: 100, question: "'It was all a dream, I used to read Word Up! magazine' is from which song?", answer: "Juicy by Notorious B.I.G." },
-  { category: "Hip-Hop Lyrics", value: 200, question: "'Now this is a story all about how...' comes from what show theme?", answer: "The Fresh Prince of Bel-Air" },
-  { category: "Hip-Hop Lyrics", value: 300, question: "'Cash rules everything around me' is from what song?", answer: "C.R.E.A.M. by Wu-Tang Clan" },
-  { category: "Hip-Hop Lyrics", value: 400, question: "'I got 99 problems but a ___ ain't one' – fill in the blank.", answer: "bitch" },
-  { category: "Hip-Hop Lyrics", value: 500, question: "'One Mic' was a song by which artist?", answer: "Nas" },
-
-  { category: "Hip-Hop Beefs", value: 100, question: "Who did Drake famously feud with in 2015?", answer: "Meek Mill" },
-  { category: "Hip-Hop Beefs", value: 200, question: "Who did 2Pac diss in 'Hit Em Up'?", answer: "The Notorious B.I.G." },
-  { category: "Hip-Hop Beefs", value: 300, question: "Jay-Z and Nas had a beef involving which two songs?", answer: "'Ether' and 'Takeover'" },
-  { category: "Hip-Hop Beefs", value: 400, question: "Pusha T revealed what about Drake in a diss track?", answer: "He had a secret son" },
-  { category: "Hip-Hop Beefs", value: 500, question: "Which rapper battled Canibus in the late '90s?", answer: "LL Cool J" },
-
-  { category: "Hip-Hop Cars", value: 100, question: "Which car is known from Dr. Dre’s 'Still D.R.E.' video?", answer: "Lowrider" },
-  { category: "Hip-Hop Cars", value: 200, question: "Which luxury car brand is often associated with Rick Ross?", answer: "Maybach" },
-  { category: "Hip-Hop Cars", value: 300, question: "What type of car did Tupac ride in the night he was shot?", answer: "BMW 750iL" },
-  { category: "Hip-Hop Cars", value: 400, question: "What 4-letter word describes a flashy, customized car?", answer: "Whip" },
-  { category: "Hip-Hop Cars", value: 500, question: "Which rapper is known for a collection of Bugattis and Ferraris?", answer: "Birdman" }
+const questions = [
+  [
+    { question: "This Queensbridge MC dropped 'Illmatic' at 20 years old.", answer: "Who is Nas?" },
+    { question: "He founded Roc-A-Fella Records and is married to Beyoncé.", answer: "Who is Jay-Z?" },
+    { question: "He mentored The Game and helped create Aftermath Entertainment.", answer: "Who is Dr. Dre?" },
+    { question: "This 'Jesus Walks' rapper hails from Chicago.", answer: "Who is Kanye West?" },
+    { question: "He was the Notorious one.", answer: "Who is Biggie Smalls / The Notorious B.I.G.?" }
+  ],
+  [
+    { question: "The Bronx is known as this in Hip-Hop history.", answer: "What is the birthplace of Hip-Hop?" },
+    { question: "Snoop Dogg represents this West Coast city.", answer: "What is Long Beach?" },
+    { question: "Outkast put this city on the rap map.", answer: "What is Atlanta?" },
+    { question: "This borough was home to Biggie and Jay-Z.", answer: "What is Brooklyn?" },
+    { question: "Dr. Dre’s classic album is named after this SoCal neighborhood.", answer: "What is Compton?" }
+  ],
+  [
+    { question: "MCs are known for this lyrical skill.", answer: "What is freestyling?" },
+    { question: "This writing style includes metaphors and punchlines.", answer: "What is battle rap?" },
+    { question: "The poetic structure of rhymes is called this.", answer: "What is cadence?" },
+    { question: "A continuous verse without hooks is called this.", answer: "What is a freestyle verse?" },
+    { question: "He is considered the Shakespeare of Hip-Hop.", answer: "Who is Rakim?" }
+  ],
+  [
+    { question: "Finish this line: 'Cash rules everything around me...'", answer: "What is 'C.R.E.A.M. get the money'?" },
+    { question: "'It was all a dream...' is the opening line to what song?", answer: "What is 'Juicy' by Notorious B.I.G.?" },
+    { question: "'Now I ain't sayin' she a gold digger...' is by this rapper.", answer: "Who is Kanye West?" },
+    { question: "‘Dear Mama’ is a tribute song by this West Coast rapper.", answer: "Who is Tupac Shakur?" },
+    { question: "'I got 99 problems but a ___ ain't one.'", answer: "What is b****?" }
+  ],
+  [
+    { question: "This beef between 2Pac and Biggie shaped 90s rap.", answer: "What is East Coast vs. West Coast?" },
+    { question: "Jay-Z and this Queens rapper had a long-standing feud.", answer: "Who is Nas?" },
+    { question: "Drake and this rapper traded diss tracks in 2015.", answer: "Who is Meek Mill?" },
+    { question: "This Compton MC clashed with Drake in 2024.", answer: "Who is Kendrick Lamar?" },
+    { question: "The Game dissed this former G-Unit leader.", answer: "Who is 50 Cent?" }
+  ],
+  [
+    { question: "This car was in countless West Coast lowrider videos.", answer: "What is a Chevrolet Impala?" },
+    { question: "Kanye rapped about his Benz and his ___.", answer: "What is 'other Benz'?" },
+    { question: "Rappers love to flex this British luxury brand.", answer: "What is Rolls-Royce?" },
+    { question: "This Italian supercar is often name-dropped in trap music.", answer: "What is Lamborghini?" },
+    { question: "This NYC rapper had a song called 'Maybach Curtains.'", answer: "Who is Meek Mill?" }
+  ]
 ];
