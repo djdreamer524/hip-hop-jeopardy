@@ -1,52 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hip-Hop Jeopardy</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <h1>Hip-Hop Jeopardy</h1>
+  <div id="scoreboard">
+    <span>Team 1: <span id="team1-score">0</span></span>
+    <span>Team 2: <span id="team2-score">0</span></span>
+  </div>
+  <div id="board"></div>
 
-  <h1 class="game-title">Hip-Hop Jeopardy</h1>
-
-  <!-- Game Board Container -->
-  <div id="game-board" class="game-board"></div>
-
-  <!-- Question Modal -->
-  <div id="question-modal" class="modal hidden">
+  <div id="question-modal" class="modal">
     <div class="modal-content">
-      <p id="question-text"></p>
-      <button id="reveal-answer">Reveal Answer</button>
-      <p id="answer-text" class="hidden"></p>
-      <button id="close-modal">Close</button>
+      <span id="question-text"></span>
+      <button onclick="closeQuestion()">Close</button>
     </div>
   </div>
 
-  <!-- Audio FX -->
-  <audio id="bgm" autoplay loop muted>
-    <source src="instrumental.mp3" type="audio/mpeg">
-  </audio>
-  <audio id="scratch-sfx" src="scratch.mp3"></audio>
-  <audio id="applause-sfx" src="applause.mp3"></audio>
-
-  <!-- Footer -->
   <footer>
-    <p>Designed by: DJ Dreamer 524</p>
+    Designed by: DJ Dreamer 524
   </footer>
 
-  <!-- JavaScript -->
-  <script src="questions.js"></script>
-  <script src="script.js"></script>
+  <audio autoplay loop>
+    <source src="instrumental.mp3" type="audio/mpeg">
+  </audio>
 
-  <!-- Allow Audio on Click -->
-  <script>
-    document.body.addEventListener('click', () => {
-      const bgm = document.getElementById('bgm');
-      if (bgm.muted) {
-        bgm.muted = false;
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
