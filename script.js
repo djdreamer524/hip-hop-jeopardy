@@ -1,66 +1,70 @@
 
-const board = document.getElementById("board");
-const modal = document.getElementById("modal");
-const closeBtn = document.getElementById("closeBtn");
-const questionTitle = document.getElementById("questionTitle");
-const questionText = document.getElementById("questionText");
-const answerText = document.getElementById("answerText");
-const showAnswerBtn = document.getElementById("showAnswerBtn");
-
-let currentPoints = 0;
-let currentCategory = "";
+let questions = [];
+let scores = { 1: 0, 2: 0 };
 
 function buildBoard() {
+  const board = document.getElementById("board");
   board.innerHTML = "";
 
-  categories.forEach((cat) => {
-    const header = document.createElement("div");
-    header.classList.add("tile");
-    header.innerText = cat;
-    header.style.backgroundColor = "#000";
-    header.style.color = "#fff";
-    header.style.fontWeight = "bold";
-    header.style.cursor = "default";
-    board.appendChild(header);
+  if (typeof questionSet !== "undefined") {
+    questions = questionSet;
+  }
+
+  const categories = [...new Set(questions.map(q => q.category))];
+  const uniqueValues = [...new Set(questions.map(q => q.value))].sort((a,b) => a - b);
+
+  categories.forEach(category => {
+    const cell = document.createElement("div");
+    cell.className = "tile";
+    cell.innerText = category;
+    cell.style.fontWeight = "bold";
+    board.appendChild(cell);
   });
 
-  values.forEach((val) => {
-    categories.forEach((cat) => {
-      const tile = document.createElement("div");
-      tile.classList.add("tile");
-      tile.innerText = `$${val}`;
-      tile.dataset.category = cat;
-      tile.dataset.value = val;
-      tile.onclick = () => showQuestion(cat, val, tile);
-      board.appendChild(tile);
+  uniqueValues.forEach(value => {
+    categories.forEach(category => {
+      const cell = document.createElement("div");
+      cell.className = "tile";
+      const q = questions.find(q => q.category === category && q.value === value);
+      if (q) {
+        cell.innerText = `$${q.value}`;
+        cell.onclick = () => showQuestion(q);
+      }
+      board.appendChild(cell);
     });
   });
 }
 
-function showQuestion(category, value, tile) {
-  const data = questions[category][value];
-  currentPoints = value;
-  currentCategory = category;
-  questionTitle.innerText = `${category} - $${value}`;
-  questionText.innerText = data.q;
-  answerText.innerText = data.a;
-  answerText.classList.add("hidden");
+function showQuestion(q) {
+  const modal = document.getElementById("modal");
+  const scratch = document.getElementById("scratch");
+  document.getElementById("questionTitle").innerText = `${q.category} - $${q.value}`;
+  document.getElementById("questionText").innerText = q.question;
+  document.getElementById("answerText").innerText = "Answer: " + q.answer;
+  document.getElementById("answerText").classList.add("hidden");
+  scratch.play();
   modal.style.display = "flex";
-  tile.style.visibility = "hidden";
-  document.getElementById("scratch")?.play();
-}
 
-closeBtn.onclick = () => modal.style.display = "none";
-showAnswerBtn.onclick = () => {
-  answerText.classList.remove("hidden");
-  document.getElementById("applause")?.play();
-};
+  document.getElementById("showAnswerBtn").onclick = () => {
+    document.getElementById("answerText").classList.remove("hidden");
+    document.getElementById("applause").play();
+  };
+}
 
 function addPoints(teamNum) {
-  const scoreEl = document.querySelector(`#team${teamNum} .score`);
-  let current = parseInt(scoreEl.innerText);
-  scoreEl.innerText = current + currentPoints;
-  modal.style.display = "none";
+  const current = parseInt(document.querySelector(`#team${teamNum} .score`).innerText);
+  const amount = parseInt(document.getElementById("questionTitle").innerText.split("$")[1]);
+  scores[teamNum] = current + amount;
+  document.querySelector(`#team${teamNum} .score`).innerText = scores[teamNum];
+  closeModal();
 }
 
-buildBoard();
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
+  document.getElementById("answerText").classList.add("hidden");
+}
+
+window.onload = () => {
+  buildBoard();
+  document.getElementById("closeBtn").onclick = closeModal;
+};
