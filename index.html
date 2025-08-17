@@ -4,31 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hip-Hop Jeopardy</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <h1>Hip-Hop Jeopardy</h1>
-  <div id="scoreboard">
-    <span>Team 1: <span id="team1-score">0</span></span>
-    <span>Team 2: <span id="team2-score">0</span></span>
-  </div>
-  <div id="board"></div>
-
-  <div id="question-modal" class="modal">
-    <div class="modal-content">
-      <span id="question-text"></span>
-      <button onclick="closeQuestion()">Close</button>
+  <div class="game-container">
+    <div id="jeopardy-board" class="board"></div>
+    <div id="question-modal" class="modal">
+      <div class="modal-content">
+        <h2 id="question-text"></h2>
+        <button id="reveal-answer-btn">Reveal Answer</button>
+        <h3 id="answer-text" style="display: none;"></h3>
+        <button id="close-btn">Close</button>
+      </div>
     </div>
+    <div id="scoreboard" class="scoreboard">
+      <div>Team 1: <span id="score1">0</span></div>
+      <div>Team 2: <span id="score2">0</span></div>
+    </div>
+    <footer>Designed by: DJ Dreamer 524</footer>
   </div>
-
-  <footer>
-    Designed by: DJ Dreamer 524
-  </footer>
-
-  <audio autoplay loop>
+  <audio id="background-music" autoplay loop>
     <source src="instrumental.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
   </audio>
-
   <script src="script.js"></script>
 </body>
 </html>
