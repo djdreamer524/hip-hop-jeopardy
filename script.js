@@ -1,68 +1,41 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const board = document.querySelector("board");
-  if (!board) {
-    console.error("Missing .jeopardy-board element in HTML.");
-    return;
-  }
 
-  const teamScores = [0, 0];
-  const scoreboard = document.getElementById("scoreboard");
-  const backgroundMusic = document.getElementById("background-music");
-  const scratchSound = document.getElementById("scratch-sound");
-  const applauseSound = document.getElementById("applause-sound");
+const categories = ["Hip-Hop Person", "Hip-Hop Location", "Hip-Hop Writing", "Hip-Hop Lyrics", "Hip-Hop Beefs", "Hip-Hop Cars"];
+const questions = [
+  ["Who is Nas?", "Where is Compton?", "What is a rhyme scheme?", "Finish the lyric: 'It was all a...'", "Who did Jay-Z feud with in 2001?", "What car did Tupac get shot in?"],
+  ["Who is Missy Elliott?", "Where is Bed-Stuy?", "What is a double entendre?", "Finish the lyric: 'Straight outta...'", "Who did Drake battle in 2024?", "What car is featured in 'Still D.R.E.'?"],
+  ["Who is KRS-One?", "Where is Queensbridge?", "Define punchline in rap.", "Lyric: 'Cash rules everything...'", "Who beefed with LL Cool J?", "What whip does Rick Ross rap about often?"],
+  ["Who is MC Lyte?", "Where is The Bronx?", "Define metaphor in rap.", "Lyric: 'Jesus walks with...'", "Beef: Common vs.?", "Jay-Z mentions what car in 'Otis'?"],
+  ["Who is Ice Cube?", "Where is Atlanta known for?", "What’s a 16-bar verse?", "Lyric: 'Now I’m in the limelight...'", "Who had beef with The Game?", "What’s a classic NYC street car?"],
+];
 
-  backgroundMusic.volume = 0.2;
-  backgroundMusic.loop = true;
-  backgroundMusic.play();
+const board = document.getElementById("board");
+const modal = document.getElementById("questionModal");
 
-  function updateScoreboard() {
-    scoreboard.innerHTML = `
-      <h3>Team 1: $${teamScores[0]}</h3>
-      <h3>Team 2: $${teamScores[1]}</h3>
-    `;
-  }
-
-  // Build the category row
-  for (let col = 0; col < categories.length; col++) {
+function createBoard() {
+  categories.forEach(cat => {
     const cell = document.createElement("div");
-    cell.className = "cell category";
-    cell.innerText = categories[col];
+    cell.className = "category";
+    cell.innerText = cat;
     board.appendChild(cell);
-  }
+  });
 
-  // Build the question cells
-  for (let row = 0; row < 5; row++) {
-    for (let col = 0; col < categories.length; col++) {
+  for (let i = 0; i < questions.length; i++) {
+    for (let j = 0; j < categories.length; j++) {
       const cell = document.createElement("div");
-      cell.className = "cell question";
-      cell.innerText = `$${(row + 1) * 100}`;
-
-      cell.addEventListener("click", function () {
-        const q = questions[col]?.[row];
-        if (!q) {
-          alert("No question found for this cell.");
-          return;
-        }
-
-        scratchSound.play();
-        const userAnswer = prompt(q.question);
-        if (userAnswer && userAnswer.toLowerCase() === q.answer.toLowerCase()) {
-          applauseSound.play();
-          const team = parseInt(prompt("Correct! Which team gets the points? (1 or 2)"));
-          if (team === 1 || team === 2) {
-            teamScores[team - 1] += (row + 1) * 100;
-            updateScoreboard();
-          }
-        } else {
-          alert(`Wrong! The correct answer was: ${q.answer}`);
-        }
-        cell.classList.add("answered");
-        cell.removeEventListener("click", arguments.callee);
-      });
-
+      cell.className = "cell";
+      cell.innerText = "$" + ((i + 1) * 100);
+      cell.onclick = () => showQuestion(questions[i][j], cell);
       board.appendChild(cell);
     }
   }
+}
 
-  updateScoreboard();
-});
+function showQuestion(text, cell) {
+  modal.innerText = text;
+  modal.style.display = "flex";
+  cell.onclick = null;
+  cell.style.opacity = 0.5;
+  modal.onclick = () => modal.style.display = "none";
+}
+
+window.onload = createBoard;
