@@ -10,34 +10,64 @@ const questions = {
   "Hip-Hop Cars": ["What car is in 'Still D.R.E.'?", "What does a lowrider do?", "What car did Biggie rap about?", "What's a Maybach?", "Which rapper is associated with a Rolls Royce?"]
 };
 
+const board = document.getElementById("jeopardy-board");
+const modal = document.getElementById("question-modal");
+const questionText = document.getElementById("question-text");
+const answerText = document.getElementById("answer-text");
+const revealAnswerBtn = document.getElementById("reveal-answer-btn");
+const closeBtn = document.getElementById("close-btn");
+
+let currentAnswer = "";
+let currentValue = 0;
+let currentTeam = 1;
+
 function createBoard() {
-  categories.forEach((cat, catIndex) => {
-    const header = document.createElement("div");
-    header.className = "cell";
-    header.textContent = cat;
-    board.appendChild(header);
+  const header = document.createElement("div");
+  header.classList.add("row");
+  categories.forEach(cat => {
+    const cell = document.createElement("div");
+    cell.classList.add("cell", "category");
+    cell.innerText = cat;
+    header.appendChild(cell);
   });
+  board.appendChild(header);
 
-  for (let row = 0; row < 5; row++) {
-    categories.forEach((cat, catIndex) => {
+  values.forEach(value => {
+    const row = document.createElement("div");
+    row.classList.add("row");
+    categories.forEach(cat => {
       const cell = document.createElement("div");
-      cell.className = "cell";
-      cell.textContent = `$${(row + 1) * 100}`;
-      cell.addEventListener("click", () => showQuestion(cat, row));
-      board.appendChild(cell);
+      cell.classList.add("cell");
+      cell.innerText = "$" + value;
+      cell.onclick = () => showQuestion(cat, value, cell);
+      row.appendChild(cell);
     });
-  }
+    board.appendChild(row);
+  });
 }
 
-function showQuestion(category, index) {
-  const modal = document.getElementById("question-modal");
-  const text = document.getElementById("question-text");
-  text.textContent = questions[category][index];
+function showQuestion(cat, value, cell) {
+  questionText.innerText = questions[cat][value].q;
+  answerText.innerText = questions[cat][value].a;
+  answerText.style.display = "none";
+  currentAnswer = questions[cat][value].a;
+  currentValue = value;
   modal.style.display = "block";
+  cell.onclick = null;
+  cell.style.backgroundColor = "#222";
+  cell.innerText = "";
 }
 
-function closeQuestion() {
-  document.getElementById("question-modal").style.display = "none";
-}
+revealAnswerBtn.onclick = () => {
+  answerText.style.display = "block";
+  let score = parseInt(document.getElementById("score" + currentTeam).innerText);
+  score += currentValue;
+  document.getElementById("score" + currentTeam).innerText = score;
+  currentTeam = currentTeam === 1 ? 2 : 1;
+};
+
+closeBtn.onclick = () => {
+  modal.style.display = "none";
+};
 
 createBoard();
