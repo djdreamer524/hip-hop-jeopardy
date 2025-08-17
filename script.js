@@ -1,70 +1,74 @@
 
-let questions = [];
-let scores = { 1: 0, 2: 0 };
+document.addEventListener("DOMContentLoaded", () => {
+  const board = document.querySelector(".jeopardy-board");
+  const footer = document.createElement("footer");
+  footer.innerText = "Designed by: DJ Dreamer 524";
+  document.body.appendChild(footer);
 
-function buildBoard() {
-  const board = document.getElementById("board");
-  board.innerHTML = "";
+  const scratchSound = new Audio("assets/scratch.mp3");
+  const applauseSound = new Audio("assets/applause.mp3");
+  const bgMusic = new Audio("assets/bg-music.mp3");
+  bgMusic.loop = true;
+  bgMusic.volume = 0.2;
+  bgMusic.play().catch(() => {
+    // Handle autoplay restrictions
+    console.log("Background music autoplay was blocked.");
+  });
 
-  if (typeof questionSet !== "undefined") {
-    questions = questionSet;
+  const scoreboard = document.createElement("div");
+  scoreboard.className = "scoreboard";
+  let team1Score = 0;
+  let team2Score = 0;
+  const team1 = document.createElement("div");
+  const team2 = document.createElement("div");
+  team1.className = "team";
+  team2.className = "team";
+  team1.innerText = `Team 1: $${team1Score}`;
+  team2.innerText = `Team 2: $${team2Score}`;
+  scoreboard.appendChild(team1);
+  scoreboard.appendChild(team2);
+  document.body.insertBefore(scoreboard, board);
+
+  // Create categories row
+  categories.forEach(category => {
+    const catCell = document.createElement("div");
+    catCell.className = "category";
+    catCell.innerText = category;
+    board.appendChild(catCell);
+  });
+
+  // Populate board with questions
+  for (let row = 0; row < 5; row++) {
+    for (let col = 0; col < 6; col++) {
+      const cell = document.createElement("div");
+      cell.className = "cell";
+      cell.dataset.row = row;
+      cell.dataset.col = col;
+      cell.innerText = `$${(row + 1) * 100}`;
+      board.appendChild(cell);
+    }
   }
 
-  const categories = [...new Set(questions.map(q => q.category))];
-  const uniqueValues = [...new Set(questions.map(q => q.value))].sort((a,b) => a - b);
+  board.addEventListener("click", e => {
+    if (e.target.classList.contains("cell") && !e.target.classList.contains("answered")) {
+      const row = e.target.dataset.row;
+      const col = e.target.dataset.col;
+      const q = questions[col][row];
+      scratchSound.play();
+      const team = prompt(`${q.question}\n\nEnter team (1 or 2) that got it right:`);
 
-  categories.forEach(category => {
-    const cell = document.createElement("div");
-    cell.className = "tile";
-    cell.innerText = category;
-    cell.style.fontWeight = "bold";
-    board.appendChild(cell);
-  });
-
-  uniqueValues.forEach(value => {
-    categories.forEach(category => {
-      const cell = document.createElement("div");
-      cell.className = "tile";
-      const q = questions.find(q => q.category === category && q.value === value);
-      if (q) {
-        cell.innerText = `$${q.value}`;
-        cell.onclick = () => showQuestion(q);
+      if (team === "1") {
+        team1Score += (parseInt(row) + 1) * 100;
+        team1.innerText = `Team 1: $${team1Score}`;
+        applauseSound.play();
+      } else if (team === "2") {
+        team2Score += (parseInt(row) + 1) * 100;
+        team2.innerText = `Team 2: $${team2Score}`;
+        applauseSound.play();
       }
-      board.appendChild(cell);
-    });
+
+      e.target.innerText = q.answer;
+      e.target.classList.add("answered");
+    }
   });
-}
-
-function showQuestion(q) {
-  const modal = document.getElementById("modal");
-  const scratch = document.getElementById("scratch");
-  document.getElementById("questionTitle").innerText = `${q.category} - $${q.value}`;
-  document.getElementById("questionText").innerText = q.question;
-  document.getElementById("answerText").innerText = "Answer: " + q.answer;
-  document.getElementById("answerText").classList.add("hidden");
-  scratch.play();
-  modal.style.display = "flex";
-
-  document.getElementById("showAnswerBtn").onclick = () => {
-    document.getElementById("answerText").classList.remove("hidden");
-    document.getElementById("applause").play();
-  };
-}
-
-function addPoints(teamNum) {
-  const current = parseInt(document.querySelector(`#team${teamNum} .score`).innerText);
-  const amount = parseInt(document.getElementById("questionTitle").innerText.split("$")[1]);
-  scores[teamNum] = current + amount;
-  document.querySelector(`#team${teamNum} .score`).innerText = scores[teamNum];
-  closeModal();
-}
-
-function closeModal() {
-  document.getElementById("modal").style.display = "none";
-  document.getElementById("answerText").classList.add("hidden");
-}
-
-window.onload = () => {
-  buildBoard();
-  document.getElementById("closeBtn").onclick = closeModal;
-};
+});
