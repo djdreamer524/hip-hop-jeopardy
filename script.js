@@ -11,8 +11,21 @@ let currentPoints = 0;
 let currentCategory = "";
 
 function buildBoard() {
-  categories.forEach((cat, col) => {
-    values.forEach((val, row) => {
+  board.innerHTML = "";
+
+  categories.forEach((cat) => {
+    const header = document.createElement("div");
+    header.classList.add("tile");
+    header.innerText = cat;
+    header.style.backgroundColor = "#000";
+    header.style.color = "#fff";
+    header.style.fontWeight = "bold";
+    header.style.cursor = "default";
+    board.appendChild(header);
+  });
+
+  values.forEach((val) => {
+    categories.forEach((cat) => {
       const tile = document.createElement("div");
       tile.classList.add("tile");
       tile.innerText = `$${val}`;
@@ -34,13 +47,13 @@ function showQuestion(category, value, tile) {
   answerText.classList.add("hidden");
   modal.style.display = "flex";
   tile.style.visibility = "hidden";
-  document.getElementById("scratch").play();
+  document.getElementById("scratch")?.play();
 }
 
 closeBtn.onclick = () => modal.style.display = "none";
 showAnswerBtn.onclick = () => {
   answerText.classList.remove("hidden");
-  document.getElementById("applause").play();
+  document.getElementById("applause")?.play();
 };
 
 function addPoints(teamNum) {
